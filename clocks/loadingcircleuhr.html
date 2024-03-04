@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #222;
+}
+
+#einfaden_kasten {
+    background-color: #222222;
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    animation: fadeOut 1s ease-out forwards;
+    z-index: 10;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+#clock {
+    width: 300px;
+    height: 300px;
+    border: 5px solid #fff;
+    border-radius: 50%;
+    position: relative;
+}
+
+.hand {
+    position: absolute;
+    background-color: #fff;
+    transform-origin: 50% 100%;
+    transform: rotate(90deg);
+    transition: transform 1s ease-in-out;
+}
+
+#hour {
+    width: 10px;
+    height: 100px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -100%) rotate(90deg);
+    background: linear-gradient(to top,rgba(0, 0, 0, 0) 90%, rgb(255, 255, 255) 91%);
+}
+
+#minute {
+    width: 15px;
+    height: 120px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -100%) rotate(90deg);
+    background: linear-gradient(to top,rgba(0, 0, 0, 0) 95%, rgb(255, 255, 255) 96%);
+}
+
+#second {
+    width: 25px;
+    height: 140px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -100%) rotate(90deg);
+    background: linear-gradient(to top,rgba(0, 0, 0, 0) 95%, rgb(255, 0, 0) 96%);
+}
+    </style>
+
+    <!-- Google tag (gtag.js)
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-BEQJRYJ6TM"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-BEQJRYJ6TM');
+    </script>
+
+     -->
+
+</head>
+<body>
+
+    <div id="einfaden_kasten"></div>
+
+    <div id="clock">
+        <div class="hand" id="hour"></div>
+        <div class="hand" id="minute"></div>
+        <div class="hand" id="second"></div>
+    </div>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const hours = now.getHours() % 12;
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
+
+            const hourDeg = (hours + minutes / 60) * 30;
+            const minuteDeg = (minutes + seconds / 60) * 6;
+            const secondDeg = seconds * 6;
+
+            document.getElementById('hour').style.transform = `translate(-50%, -100%) rotate(${hourDeg}deg)`;
+            document.getElementById('minute').style.transform = `translate(-50%, -100%) rotate(${minuteDeg}deg)`;
+            document.getElementById('second').style.transform = `translate(-50%, -100%) rotate(${secondDeg}deg)`;
+        }
+
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        setTimeout(function() {
+            document.getElementById('einfaden_kasten').style.opacity = 0;
+        }, 1000);
+    </script>
+</body>
+</html>
