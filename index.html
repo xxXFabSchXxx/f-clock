@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fancy-Uhren</title>
     <style>
         body {
             margin: 0;
@@ -14,119 +15,74 @@
             flex-direction: column;
             color: #fff;
             font-family: Arial, sans-serif;
-            pointer-events: none;
+            transition: opacity 0.5s ease-in-out;
+            opacity: 1;
         }
 
-        #clock {
-            width: 300px;
-            height: 300px;
-            border: 16px solid #fff;
-            border-radius: 50%;
-            position: relative;
-            margin-bottom: 20px;
-        }
-
-        .hand {
-            position: absolute;
-            background-color: #ffffff00;
-            transform-origin: 50% 100%;
-        }
-
-        #hour {
-            width: 12px;
-            height: 80px;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -100%) rotate(90deg);
-        }
-
-        #minute {
-            width: 6px;
-            height: 80px;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -100%) rotate(90deg);
+        .oberkasten{
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
+        }
+        .liste{
+            width: 10vw;
+            height: 5vh;
+            margin-right: 2.5%;
             align-items: center;
-            justify-content: flex-end;
+            justify-content: center;
+            display: flex;
+            border: rgb(200, 200, 200) 1px solid;
+            border-radius: 5px;
         }
 
-        #minute div {
-            margin-bottom: 4px;
-            color: white;
-            font-size: 16px;
+        .liste:hover{
+            background-color: gray;
+            border: gray 1px solid;
         }
 
-        #second {
-            width: 6px;
-            height: 140px;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -100%) rotate(90deg);
-            background-color: rgba(255, 0, 0, 0);
+        .zufall{
+            width: 10vw;
+            height: 5vh;
+            margin-left: 2.5%;
+            align-items: center;
+            justify-content: center;
+            display: flex;
+            border: rgb(200, 200, 200) 1px solid;
+            border-radius: 5px;
         }
 
-        #digital-clock {
-            font-size: 24px;
+        .zufall:hover{
+            background-color: gray;
+            border: gray 1px solid;
         }
     </style>
 </head>
 <body>
-    <div id="clock">
-        <div class="hand" id="hour"></div>
-        <div class="hand" id="minute"></div>
-        <div class="hand" id="second"></div>
+    <div class="oberkasten">
+        <div class="liste">
+            Liste
+        </div>
+        <div class="zufall" onclick="redirectToRandomPage()">
+            Überraschung
+        </div>
     </div>
-
-  <!--  <div id="digital-clock"></div> -->
-
     <script>
-        function updateClock() {
-            const now = new Date();
-            const hours = now.getHours();
-            const minutes = now.getMinutes();
-            const seconds = now.getSeconds();
+        function redirectToRandomPage() {
+            document.body.style.opacity = 0; // Setze die Opazität auf 0, um den Fade-Effekt zu starten
 
-            const hourDeg = (hours % 12 + minutes / 60) * 30;
-            const minuteDeg = (minutes + seconds / 60) * 6;
-            const secondDeg = seconds * 6;
+            var folderPath = 'clocks/';
 
-            const hourDiv = document.getElementById('hour');
-            hourDiv.style.transform = `translate(-50%, -100%) rotate(${hourDeg}deg)`;
-            hourDiv.innerHTML = '';
+            var pages = ['analog.html', 'codeuhr.html', 'digitaleanaloguhr.html', 'wortuhr.html'];
 
-            for (let i = 1; i <= 4; i++) {
-                const digit = document.createElement('div');
-                digit.textContent = hours;
-                hourDiv.appendChild(digit);
-            }
+            var randomIndex = Math.floor(Math.random() * pages.length);
 
-            const minuteDiv = document.getElementById('minute');
-            minuteDiv.style.transform = `translate(-50%, -100%) rotate(${minuteDeg}deg)`;
-            minuteDiv.innerHTML = '';
+            var randomPagePath = folderPath + pages[randomIndex];
 
-            for (let i = 1; i <= 6; i++) {
-                const digit = document.createElement('div');
-                digit.textContent = minutes;
-                minuteDiv.appendChild(digit);
-            }
-
-            const secondDiv = document.getElementById('second');
-            secondDiv.style.transform = `translate(-50%, -100%) rotate(${secondDeg}deg)`;
-            secondDiv.innerHTML = '';
-            for (let i = 1; i <= 8; i++) {
-                const digit = document.createElement('div');
-                digit.textContent = seconds;
-                secondDiv.appendChild(digit);
-            }
-
-            const digitalClock = document.getElementById('digital-clock');
-            digitalClock.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            // Warte 500ms, damit der Fade-Effekt sichtbar ist, bevor die Seite umgeleitet wird
+            setTimeout(function() {
+                window.location.href = randomPagePath;
+            }, 500);
         }
-
-        setInterval(updateClock, 1000);
-        updateClock();
     </script>
+
 </body>
 </html>
